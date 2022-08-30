@@ -1,5 +1,5 @@
 function carregarDados() {
-    fetch("../json/estados.json")
+    fetch("json/estados.json")
         .then(response => response.json())
         .then(dados => {
             dados.sort(function (a, b) {
