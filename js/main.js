@@ -1,29 +1,26 @@
-fetch("../json/estados.json")
+function carregarDados(){
+    fetch("../json/estados.json")
     .then(response => response.json())
     .then(dados => {
-        let listaEstados = []
-        dados.map((estado, indice) => {
-            listaEstados.push([estado.nome])
-            listaEstados[indice].push([estado.uf])
-            listaEstados[indice].push([estado.codigo_uf])
-            listaEstados[indice].push([estado.latitude])
-            listaEstados[indice].push([estado.longitude])
-            listaEstados[indice].push([estado.regiao])
-
+        dados.sort(function(a,b){
+            if(a.uf < b.uf) return -1
+            if(a.uf > b.uf) return 1
+            return 0
         })
-
-        listaEstados.sort()
 
         let div = document.getElementById("estados");
         let ul = document.createElement("ul");
 
-        listaEstados.forEach(estado => {
+        dados.forEach(estado => {
             let li = document.createElement("li");
-            li.innerText = estado[0] + " - " + estado[1]
+            li.innerText = estado.nome + " - " + estado.uf
+            li.setAttribute("onclick", "gerarMapa()")
             ul.appendChild(li);
         })
 
         div.appendChild(ul);
 
     })
+}
 
+document.addEventListener("DOMContentLoaded", carregarDados)
